@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 from prophet import Prophet
 from sqlalchemy import create_engine
-from bi_inventario import calcular_inventario_bi
+from bi.bi_inventario import calcular_inventario_bi
 
 app = FastAPI()
 
