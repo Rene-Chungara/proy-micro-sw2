@@ -4,3 +4,5 @@ pandas
 scikit-learn
 prophet
 sqlalchemy
+psycopg2-binary
+plotly
