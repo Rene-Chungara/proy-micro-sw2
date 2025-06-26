@@ -17,7 +17,7 @@ app.add_middleware(
 )
 
 # Conexión a tu base de datos PostgreSQL
-DB_URL = "postgresql://postgres:password@localhost:5432/veterinaria"
+DB_URL = "postgresql://postgres:password@3.95.222.41:5432/veterinaria"
 engine = create_engine(DB_URL)
 
 @app.get("/api/prediccion")
