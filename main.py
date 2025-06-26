@@ -4,7 +4,8 @@ import pandas as pd
 from prophet import Prophet
 from sqlalchemy import create_engine
 from bi.bi_inventario import calcular_inventario_bi
-
+import os
+print(f"DEBUG: La aplicación está esperando el puerto: {os.getenv('PORT')}")
 app = FastAPI()
 
 # Permitir solicitudes desde Laravel
