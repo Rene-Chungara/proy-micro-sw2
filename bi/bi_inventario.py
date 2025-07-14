@@ -4,8 +4,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 DB_USER = 'postgres'
-DB_PASS = 'password'
-DB_HOST = '3.95.222.41'
+DB_PASS = '010494'
+DB_HOST = '127.0.0.1'
 DB_PORT = '5432'
 DB_NAME = 'veterinaria'
 
@@ -33,4 +33,7 @@ def calcular_inventario_bi():
     productos = productos.merge(clasificacion.rename('clasificacion_abc'), left_on='id', right_index=True, how='left').fillna('C')
 
     resultado = productos[['id', 'nombre', 'stock', 'eoq', 'rop', 'clasificacion_abc']]
+    resultado = productos[['id', 'eoq', 'rop', 'clasificacion_abc']]
+    resultado = resultado.rename(columns={'id': 'producto_id'})
+    resultado.to_sql('bi_resultados', engine, if_exists='replace', index=False)
     return resultado.to_dict(orient='records')

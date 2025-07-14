@@ -3,8 +3,8 @@ from sqlalchemy import create_engine
 
 # Configura tu conexión
 DB_USER = 'postgres'
-DB_PASS = 'password'
-DB_HOST = '3.95.222.41'
+DB_PASS = '010494'
+DB_HOST = '127.0.0.1'
 DB_PORT = '5432'
 DB_NAME = 'veterinaria'
 

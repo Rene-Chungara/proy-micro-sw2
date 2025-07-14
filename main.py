@@ -11,14 +11,20 @@ app = FastAPI()
 # Permitir solicitudes desde Laravel
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Para producción cambia esto por tu dominio Laravel
+    allow_origins=["*"],  # Para producción cambia esto por tu dominio
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Conexión a tu base de datos PostgreSQL
-DB_URL = "postgresql://postgres:password@3.95.222.41:5432/veterinaria"
+DB_USER = 'postgres'
+DB_PASS = '010494'
+DB_HOST = '127.0.0.1'
+DB_PORT = '5432'
+DB_NAME = 'veterinaria'
+
+DB_URL = f'postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 engine = create_engine(DB_URL)
 
 @app.get("/api/prediccion")
