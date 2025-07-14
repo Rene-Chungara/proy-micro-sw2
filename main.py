@@ -5,6 +5,11 @@ from prophet import Prophet
 from sqlalchemy import create_engine
 from bi.bi_inventario import calcular_inventario_bi
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde .env
+load_dotenv()
+
 print(f"DEBUG: La aplicación está esperando el puerto: {os.getenv('PORT')}")
 app = FastAPI()
 
@@ -17,15 +22,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Conexión a tu base de datos PostgreSQL
-DB_USER = 'postgres'
-DB_PASS = '010494'
-DB_HOST = '127.0.0.1'
-DB_PORT = '5432'
-DB_NAME = 'veterinaria'
+# Conexión a tu base de datos PostgreSQL usando variables de entorno
+DB_USER = os.getenv('DB_USER')
+DB_PASS = os.getenv('DB_PASS')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
 
 DB_URL = f'postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 engine = create_engine(DB_URL)
+
+@app.get("/")
+def root():
+    """Endpoint raíz para verificar que la API está funcionando"""
+    return {
+        "message": "¡API de Veterinaria funcionando correctamente! 🚀",
+        "status": "activo",
+        "version": "1.0.0",
+        "endpoints": {
+            "prediccion": "/api/prediccion?producto_id=1",
+            "inventario_bi": "/api/bi/inventario",
+            "documentacion": "/docs"
+        }
+    }
+
+@app.get("/health")
+def health_check():
+    """Endpoint de verificación de salud de la API"""
+    return {
+        "status": "OK",
+        "message": "API funcionando correctamente",
+        "database": "conectada" if engine else "desconectada"
+    }
 
 @app.get("/api/prediccion")
 def obtener_prediccion(producto_id: int = 1):

@@ -1,12 +1,17 @@
 import pandas as pd
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
 
-# Configura tu conexión
-DB_USER = 'postgres'
-DB_PASS = '010494'
-DB_HOST = '127.0.0.1'
-DB_PORT = '5432'
-DB_NAME = 'veterinaria'
+# Cargar variables de entorno desde .env
+load_dotenv()
+
+# Conexión a la base de datos usando variables de entorno
+DB_USER = os.getenv('DB_USER')
+DB_PASS = os.getenv('DB_PASS')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
 
 engine = create_engine(f'postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 
