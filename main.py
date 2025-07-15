@@ -9,6 +9,7 @@ from bi.bi_inventario import calcular_inventario_bi
 import os
 from dotenv import load_dotenv
 from typing import Dict, List, Any
+from routers import rotacion, proveedores
 from tqdm import tqdm  # opcional para debug
 import warnings
 warnings.filterwarnings("ignore")
@@ -220,3 +221,7 @@ def sugerencias_precio():
         "total": len(sugerencias),
         "sugerencias": sugerencias
     }
+
+app.include_router(rotacion.router)
+
+app.include_router(proveedores.router)
