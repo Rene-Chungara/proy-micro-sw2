@@ -39,7 +39,6 @@ def calcular_inventario_bi():
     productos = productos.merge(clasificacion.rename('clasificacion_abc'), left_on='id', right_index=True, how='left').fillna('C')
 
     resultado = productos[['id', 'nombre', 'stock', 'eoq', 'rop', 'clasificacion_abc']]
-    resultado = productos[['id', 'eoq', 'rop', 'clasificacion_abc']]
     resultado = resultado.rename(columns={'id': 'producto_id'})
     resultado.to_sql('bi_resultados', engine, if_exists='replace', index=False)
     return resultado.to_dict(orient='records')
