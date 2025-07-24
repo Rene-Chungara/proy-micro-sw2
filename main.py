@@ -186,22 +186,18 @@ def sugerencias_precio():
         sugerido = actual
         razon = None
 
-        # Condición 1: Subir precio si se vende mucho y hay poco stock
         if vendidos >= 50 and stock < 10:
             sugerido = round(actual * 1.10, 2)
             razon = "Subir precio por alta rotación y bajo stock"
 
-        # Condición 2: Bajar precio si no se vende y hay mucho stock
         if stock > 30 and vendidos < 10:
             sugerido = round(actual * 0.90, 2)
             razon = "Bajar precio por sobrestock y baja venta"
 
-        # Condición 3: Ajustar al promedio si hay diferencia significativa
         if abs(actual - promedio) > 2:
             sugerido = round(promedio, 2)
             razon = "Ajustar al promedio de ventas"
 
-        # Si ninguna condición se cumple, dejar igual y decirlo
         if razon is None:
             razon = "Precio actual es razonable"
             sugerido = round(actual, 2)
