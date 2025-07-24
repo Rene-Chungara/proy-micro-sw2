@@ -6,3 +6,6 @@ prophet
 sqlalchemy
 psycopg2-binary
 plotly
+python-dotenv
+scikit-learn
+numpy

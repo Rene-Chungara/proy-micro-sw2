@@ -2,12 +2,18 @@
 
 import pandas as pd
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
 
-DB_USER = 'postgres'
-DB_PASS = 'password'
-DB_HOST = '3.95.222.41'
-DB_PORT = '5432'
-DB_NAME = 'veterinaria'
+# Cargar variables de entorno desde .env
+load_dotenv()
+
+# Conexión a la base de datos usando variables de entorno
+DB_USER = os.getenv('DB_USER')
+DB_PASS = os.getenv('DB_PASS')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
 
 engine = create_engine(f'postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 
@@ -33,4 +39,6 @@ def calcular_inventario_bi():
     productos = productos.merge(clasificacion.rename('clasificacion_abc'), left_on='id', right_index=True, how='left').fillna('C')
 
     resultado = productos[['id', 'nombre', 'stock', 'eoq', 'rop', 'clasificacion_abc']]
+    resultado = resultado.rename(columns={'id': 'producto_id'})
+    resultado.to_sql('bi_resultados', engine, if_exists='replace', index=False)
     return resultado.to_dict(orient='records')
